@@ -1,0 +1,21 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+- docker pull rainbond/pkg-download:debian-95-v2
+- docker pull rainbond/pkg-download:ubuntu-1604-v2
+- docker pull rainbond/pkg-download:centos-1708-v2
+
+script:
+- docker run --rm -v ${PWD}/deb/debian:/opt/rainbond/install/install/pkgs/debian rainbond/pkg-download:debian-95-v2
+- docker run --rm -v ${PWD}/deb/ubuntu:/opt/rainbond/install/install/pkgs/ubuntu rainbond/pkg-download:ubuntu-1604-v2
+- docker run --rm -v ${PWD}/rpm/centos/7:/opt/rainbond/install/install/pkgs/centos rainbond/pkg-download:centos-1708-v2
+- sudo chmod -R 755 ${PWD}/rpm
+- sudo chmod -R 755 ${PWD}/deb
+- docker build -t rainbond/install-repo:$TRAVIS_BRANCH .
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- docker push rainbond/install-repo:$TRAVIS_BRANCH
+
+
