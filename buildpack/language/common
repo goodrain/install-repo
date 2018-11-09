@@ -1,0 +1,16 @@
+#!/bin/bash
+
+[ "$DEBUG" ] && set -xe
+
+versions=(v0 v1 v2 v3 v4 v5 v6 v7 v8 latest)
+download_path="/offline/common/buildpack-stdlib"
+VENDOR_URL="https://lang-common.s3.amazonaws.com/buildpack-stdlib"
+
+# download stdlib.sh
+for version in ${versions[@]}
+do
+    echo "download ${version}/stdlib.sh"
+    [ -d "${download_path}/${version}" ] || mkdir -p ${download_path}/${version}
+    curl -s -L ${VENDOR_URL}/${version}/stdlib.sh -o ${download_path}/${version}/stdlib.sh
+    chmod +x ${download_path}/${version}/stdlib.sh
+done

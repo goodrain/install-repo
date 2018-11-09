@@ -1,4 +1,4 @@
-all: centos debian ubuntu
+all: centos debian ubuntu 
 centos:
 	@docker build -t rainbond/pkg-download:centos-1708-v5 download/centos-7
 
@@ -7,3 +7,6 @@ debian:
 
 ubuntu:
 	@docker build -t rainbond/pkg-download:ubuntu-1604-v5 download/ubuntu-16
+
+buildpacks:
+	@docker build -t rainbond/buildpack-requirements:cedar-14 buildpack
