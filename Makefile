@@ -7,6 +7,3 @@ debian:
 
 ubuntu:
 	@docker build -t rainbond/pkg-download:ubuntu-1604-v5 download/ubuntu-16
-
-buildpacks:
-	@docker build -t rainbond/buildpack-requirements:cedar-14 buildpack

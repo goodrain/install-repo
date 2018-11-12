@@ -11,5 +11,5 @@
 镜像 `rainbond/install-repo:master`
 
 ```
-docker run -it -p 2017:2017 -v /var/log/caddy:/var/log/caddy  rainbond/install-repo:master
+docker run -it -p 2017:2017 -v /var/log/caddy:/var/log/caddy rainbond/install-repo:pkg-master
 ```

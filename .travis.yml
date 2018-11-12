@@ -15,23 +15,17 @@ script:
 - docker build -t rainbond/pkg-download:centos-1708-v5 download/centos-7
 - docker build -t rainbond/pkg-download:debian-95-v5 download/debian-9
 - docker build -t rainbond/pkg-download:ubuntu-1604-v5 download/ubuntu-16
-- docker build -t rainbond/buildpack-requirements:cedar-14 buildpack
 - docker run --rm -v ${PWD}/rpm/centos/7:/opt/rainbond/install/install/pkgs/centos rainbond/pkg-download:centos-1708-v5
 - docker run --rm -v ${PWD}/deb/debian:/opt/rainbond/install/install/pkgs/debian rainbond/pkg-download:debian-95-v5
 - docker run --rm -v ${PWD}/deb/ubuntu:/opt/rainbond/install/install/pkgs/ubuntu rainbond/pkg-download:ubuntu-1604-v5
-- docker run --rm -v ${PWD}/lang:/offline rainbond/buildpack-requirements:cedar-14
 - sudo chmod -R 755 ${PWD}/rpm
 - sudo chmod -R 755 ${PWD}/deb
-- sudo chmod -R 755 ${PWD}/lang
-- docker build -t rainbond/install-repo:pkg-$TRAVIS_BRANCH -f Dockerfile.pkg .
-- docker build -t rainbond/install-repo:lang-$TRAVIS_BRANCH -f Dockerfile.lang .
+- docker build -t rainbond/install-repo:pkg-$TRAVIS_BRANCH -f Dockerfile .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - docker push rainbond/install-repo:pkg-$TRAVIS_BRANCH
-- docker push rainbond/install-repo:lang-$TRAVIS_BRANCH
 - docker push rainbond/pkg-download:centos-1708-v5
 - docker push rainbond/pkg-download:debian-95-v5
 - docker push rainbond/pkg-download:ubuntu-1604-v5
-- docker push rainbond/buildpack-requirements:cedar-14
 
 
 
