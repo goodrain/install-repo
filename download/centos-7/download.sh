@@ -10,12 +10,16 @@ else
     k8s_pkg=(kubelet kubeadm kubectl)
     docker_ce_pkg=(docker-ce)
     k8s_version=(1.10.11-0)
-    docker_version=(17.03.2.ce)
+    docker_version=(17.06.2.ce)
     yum install centos-release-gluster -y -q
     yum install -y epel-release -y -q
-    for pkg in ${common_pkg[@]} ${storage_pkg[@]} ${network_pkg[@]}
+    for pkg in ${common_pkg[@]} ${storage_pkg[@]} ${network_pkg[@]} ${docker_ce_pkg[@]}
     do
-        yum install ${pkg} --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
+        if [ "$pkg" == "docker-ce" ];then
+            yum install ${pkg}-${docker_version} --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
+        else
+            yum install ${pkg} --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
+        fi
         ls $PKG_PATH/centos/ | grep "$pkg" >/dev/null 2>&1
         if [ "$?" == 0 ];then
             echo "download centos $pkg ok"
