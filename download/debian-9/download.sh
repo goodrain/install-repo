@@ -7,9 +7,9 @@ else
     apt update
     echo "download debian/ubuntu offline package"
 
-    dpkg=(nfs-kernel-server nfs-common dnsutils python-pip python-apt apt-transport-https uuid-runtime iproute2 systemd)
+    dpkg=(nfs-kernel-server nfs-common dnsutils conntrack jq socat python-pip ipset ipvsadm python-apt apt-transport-https uuid-runtime iproute2 systemd sshpass python-pip uuid-runtime pwgen expect)
     common_pkg=(tar ntpdate wget curl tree lsof htop nload net-tools telnet rsync git dstat salt-master salt-minion salt-ssh iotop lvm2 ntpdate pwgen)
-    k8s_pkg=(kubelet=1.10.9-00 kubectl=1.10.9-00 kubeadm=1.10.9-00)
+    k8s_pkg=(kubelet=1.10.11-00 kubectl=1.10.11-00 kubeadm=1.10.11-00)
     docker_pkg=(docker-ce=17.05.0~ce)
     for pkg in ${dpkg[@]} ${common_pkg[@]} ${k8s_pkg[@]} ${docker_pkg[@]}
     do

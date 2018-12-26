@@ -4,12 +4,12 @@ if [ "$1" == "bash" ];then
     exec /bin/bash
 else
     PKG_PATH=/opt/rainbond/install/install/pkgs
-    common_pkg=(tar ntpdate wget perl bind-utils curl tree lsof htop nload net-tools telnet rsync git dstat salt-master salt-minion salt-ssh iotop lvm2 ntpdate pwgen iproute bash-completion createrepo)
+    common_pkg=(conntrack-tools psmisc jq socat  ipset ipvsadm tar ntpdate wget perl bind-utils curl tree lsof htop nload net-tools telnet rsync git dstat salt-master salt-minion salt-ssh iotop lvm2 ntpdate pwgen iproute bash-completion createrepo sshpass python-pip uuidgen pwgen expect ansible)
     storage_pkg=(glusterfs-server nfs-utils)
     network_pkg=(bridge-utils)
     k8s_pkg=(kubelet kubeadm kubectl)
     docker_ce_pkg=(docker-ce)
-    k8s_version=(1.10.9-0)
+    k8s_version=(1.10.11-0)
     docker_version=(17.03.2.ce)
     yum install centos-release-gluster -y -q
     yum install -y epel-release -y -q
