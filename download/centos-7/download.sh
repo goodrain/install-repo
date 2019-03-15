@@ -1,25 +1,20 @@
 #!/bin/bash
 
+PKG_PATH=/opt/rainbond/install/install/pkgs
+
+base_pkg=(tar jq wget curl perl tree lsof htop nload net-tools telnet rsync git ntpdate pwgen iproute bash-completion createrepo sshpass python-pip uuidgen pwgen expect ansible)
+system_pkg=(conntrack-tools iotop lvm2 dstat psmisc socat  ipset ipvsadm bind-utils )
+network_pkg=(bridge-utils )
+storage_pkg=(glusterfs-server nfs-utils)
+
 if [ "$1" == "bash" ];then
     exec /bin/bash
 else
-    PKG_PATH=/opt/rainbond/install/install/pkgs
-    common_pkg=(conntrack-tools psmisc jq socat  ipset ipvsadm tar ntpdate wget perl bind-utils curl tree lsof htop nload net-tools telnet rsync git dstat salt-master salt-minion salt-ssh iotop lvm2 ntpdate pwgen iproute bash-completion createrepo sshpass python-pip uuidgen pwgen expect ansible)
-    storage_pkg=(glusterfs-server nfs-utils)
-    network_pkg=(bridge-utils)
-    k8s_pkg=(kubelet kubeadm kubectl)
-    docker_ce_pkg=(docker-ce)
-    k8s_version=(1.10.11-0)
-    docker_version=(17.06.2.ce)
-    yum install centos-release-gluster -y -q
-    yum install -y epel-release -y -q
-    for pkg in ${common_pkg[@]} ${storage_pkg[@]} ${network_pkg[@]} ${docker_ce_pkg[@]}
+    yum install -y centos-release-gluster
+    yum install -y epel-release
+    for pkg in ${base_pkg[@]} ${system_pkg[@]} ${network_pkg[@]} ${storage_pkg[@]}
     do
-        if [ "$pkg" == "docker-ce" ];then
-            yum install ${pkg}-${docker_version} --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
-        else
-            yum install ${pkg} --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
-        fi
+        yum install ${pkg} --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
         ls $PKG_PATH/centos/ | grep "$pkg" >/dev/null 2>&1
         if [ "$?" == 0 ];then
             echo "download centos $pkg ok"
@@ -27,19 +22,11 @@ else
             echo "download centos $pkg failed"
         fi
     done
-    for version in ${k8s_version[@]}
-    do
-        for pkg in ${k8s_pkg[@]}
-        do
-            yum install ${pkg} --downloadonly --disableexcludes=kubernetes --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
-            ls $PKG_PATH/centos/ | grep "$pkg" >/dev/null 2>&1
-            if [ "$?" == 0 ];then
-                echo "download centos $pkg ok"
-            else
-                echo "download centos $pkg failed"
-            fi
-        done
-    done
+    #pkg_suffix="el"
+    #pkg_manager="yum"
+    #pkg_pattern="$(echo "18.06" | sed "s/-ce-/\\\\.ce.*/g" | sed "s/-/.*/g").*$pkg_suffix"
+	#search_command="$pkg_manager list --showduplicates 'docker-ce' | grep '$pkg_pattern' | tail -1 | awk '{print \$2}'"
+	yum install docker-ce-$(yum list --showduplicates 'docker-ce' | grep '18.06.*el' | tail -1 | awk '{print $2}') --downloadonly --downloaddir=$PKG_PATH/centos/ >/dev/null 2>&1
     yum install -y createrepo >/dev/null 2>&1
     createrepo /opt/rainbond/install/install/pkgs/centos/  >/dev/null 2>&1
 fi
