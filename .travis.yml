@@ -10,11 +10,13 @@ before_install:
 - docker pull centos:7.4.1708
 
 script:
-- docker build -t rainbond/pkg-download:centos-7.4-v5.1 download/centos-7
-- docker run --rm -v ${PWD}/rpm/centos/7:/opt/rainbond/install/install/pkgs/centos rainbond/pkg-download:centos-7.4-v5.1
+- docker build -t rainbond/pkg-download:centos-7.4-v5.x download/centos-7
+- docker run --rm -v ${PWD}/rpm/centos/7:/opt/rainbond/install/install/pkgs/centos rainbond/pkg-download:centos-7.4-v5.x
+- docker build -t rainbond/pkg-repo:centos-7.4-v5.x .
 - sudo chmod -R 755 ${PWD}/rpm
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push rainbond/pkg-download:centos-7.4-v5.1
+- docker push rainbond/pkg-download:centos-7.4-v5.x
+- docker push rainbond/pkg-repo:centos-7.4-v5.x
 
 
 
