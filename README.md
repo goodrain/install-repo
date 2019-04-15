@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/goodrain/install-repo.svg?branch=master)](https://travis-ci.org/goodrain/install-repo)
 # install-repo
 
-Rainbond在CentOS 7.4上安装需要的依赖包
+Rainbond在CentOS 7.4/7.6上安装需要的依赖包
 
 - docker(18.06)
 - 常用系统工具包
