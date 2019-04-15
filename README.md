@@ -11,3 +11,5 @@ Rainbond在CentOS 7.4/7.6上安装需要的依赖包
 ```
 docker run -it -p 2017:2017 -v /var/log/caddy:/var/log/caddy rainbond/pkg-repo:centos-7.4-v5.x
 ```
+
+> 推荐直接使用物理机制作离线包
